@@ -11,6 +11,9 @@ export const Button = styled.button<ButtonProps>`
   transition: 0.6s;
   text-align: center;
   justify-content: center;
+  border: 1px solid ${({ theme }) => theme.toggleBorder};
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.text};
 
   &:hover {
     background-color: #3ca2c3;

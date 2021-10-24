@@ -18,7 +18,7 @@ interface UseContractReturn {
   isMinting: number | null;
   characters: Character[];
   mintNft: (characterIndex: number) => void;
-  userNft: Character | null;
+  userNft?: Character ;
   isModalOpen: boolean;
 }
 

@@ -7,7 +7,7 @@ import contractData from "src/utils/contract.json";
 
 export const useContract: UseContract = () => {
   const [hasNft, setHasNft] = useState<boolean>(false);
-  const [userNft, setNft] = useState<Character | null>(null);
+  const [userNft, setNft] = useState<Character>();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [isMinting, setIsMinting] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

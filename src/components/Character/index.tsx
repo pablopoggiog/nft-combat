@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { Button, Spinner } from "src/components";
+import { CONTRACT_ADDRESS, OPENSEA_LINK } from "src/constants";
 import { Character as CharacterType } from "src/types";
 import {
   Container,
@@ -7,6 +8,7 @@ import {
   CharacterHp,
   CharacterMaxHp,
   CharacterAttackDamage,
+  Link,
 } from "./styles";
 
 interface CharacterProps {
@@ -32,6 +34,14 @@ export const Character: FunctionComponent<CharacterProps> = ({
         <Spinner />
       ) : (
         <>
+          {isModal && (
+            <Link
+              target="_blank"
+              href={`${OPENSEA_LINK}${CONTRACT_ADDRESS}/${character?.tokenId}`}
+            >
+              See your NFT in Opensea!
+            </Link>
+          )}
           <CharacterName>{character?.name}</CharacterName>
           <CharacterHp>
             Health Points: <strong>{String(character?.hp)}</strong>

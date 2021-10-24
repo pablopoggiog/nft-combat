@@ -6,7 +6,7 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  cursor: pointer;
+  cursor: ${({ isModal }) => !isModal && "pointer"};
   border: 1px solid ${({ theme }) => theme.toggleBorder};
   padding: 1em;
   box-shadow: 1px 1px 20px ${({ theme }) => theme.text};
@@ -17,6 +17,7 @@ export const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: 0.5s;
 
   &::before {
     content: "";
@@ -54,3 +55,8 @@ export const CharacterHp = styled.p``;
 export const CharacterMaxHp = styled.p``;
 
 export const CharacterAttackDamage = styled.p``;
+
+export const Link = styled.a`
+  color: grey;
+  text-decoration: none;
+`;

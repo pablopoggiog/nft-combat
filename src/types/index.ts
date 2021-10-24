@@ -15,7 +15,7 @@ export interface Character {
 
 interface UseContractReturn {
   hasNft: boolean;
-  isMinting: number | null;
+  isMintingIndex: number | null;
   characters: Character[];
   mintNft: (characterIndex: number) => void;
   userNft?: Character ;

@@ -9,7 +9,7 @@ export const useContract: UseContract = () => {
   const [hasNft, setHasNft] = useState<boolean>(false);
   const [userNft, setNft] = useState<Character>();
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [isMinting, setIsMinting] = useState<number | null>(null);
+  const [isMintingIndex, setIsMintingIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [connectedContract, setConnectedContract] = useState<Contract>();
 
@@ -55,12 +55,12 @@ export const useContract: UseContract = () => {
   const mintNft = useCallback(
     async (characterIndex: number) => {
       if (connectedContract) {
-        setIsMinting(characterIndex);
+        setIsMintingIndex(characterIndex);
         const transaction = await connectedContract.mintNFT(characterIndex);
 
         await transaction.wait();
 
-        setIsMinting(null);
+        setIsMintingIndex(null);
       }
     },
     [connectedContract]
@@ -105,5 +105,5 @@ export const useContract: UseContract = () => {
     };
   }, [connectedContract, onMint]);
 
-  return { hasNft, isMinting, characters, mintNft, userNft, isModalOpen };
+  return { hasNft, isMintingIndex, characters, mintNft, userNft, isModalOpen };
 };

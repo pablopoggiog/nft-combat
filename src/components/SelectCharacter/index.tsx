@@ -3,7 +3,7 @@ import { Modal, Character } from "src/components";
 import { Container, Title, CharactersContainer } from "./styles";
 
 export const SelectCharacter = () => {
-  const { characters, mintNft, isMinting, userNft, isModalOpen } =
+  const { characters, mintNft, isMintingIndex, userNft, isModalOpen } =
     useContract();
 
   return (
@@ -14,6 +14,7 @@ export const SelectCharacter = () => {
           characters.map((character) => (
             <Character
               key={character.name}
+              isLoading={isMintingIndex === userNft?.index}
               character={character}
               mint={mintNft}
             />
@@ -23,7 +24,7 @@ export const SelectCharacter = () => {
         content={
           <Character
             character={userNft}
-            isLoading={isMinting === userNft?.index}
+            isModal
           />
         }
         isOpen={isModalOpen}

@@ -3,6 +3,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { useWallet } from "src/hooks";
 import { lightTheme, darkTheme } from "src/theme";
 import { Button, Toggler } from "src/components";
+import image from "src/assets/squid.jpeg";
 
 const App = () => {
   const [theme, setTheme] = useState("dark");
@@ -10,13 +11,16 @@ const App = () => {
   const themeToggler = () =>
     theme === "light" ? setTheme("dark") : setTheme("light");
 
-  const { currentAccount, connectWallet, interactWithContract } = useWallet();
+  const { currentAccount, connectWallet } = useWallet();
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <Container>
         <Toggler toggleTheme={themeToggler} />
         <Title> Let the games begin!</Title>
+        <ImageContainer>
+          <Image src={image} />
+        </ImageContainer>
         {!currentAccount && (
           <Button onClick={connectWallet}>Connect your wallet!</Button>
         )}
@@ -38,7 +42,20 @@ const Container = styled.div`
 
 const Title = styled.h1`
   text-align: center;
-  font-size: 1em;
+  font-size: 2em;
   padding: 1em;
   color: ${({ theme }) => theme.text};
+  text-shadow: 1px 1px 20px ${({ theme }) => theme.text};
+`;
+
+const ImageContainer = styled.div`
+  max-height: 400px;
+  overflow-y: hidden;
+  margin: 2em 0;
+  box-shadow: 1px 1px 20px ${({ theme }) => theme.text};
+  border-radius: 5px;
+`;
+
+const Image = styled.img`
+  width: 100%;
 `;

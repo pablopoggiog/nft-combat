@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/nft-combat/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/nft-combat/static/js/main.07b920f4.chunk.js",
-    "main.js.map": "/nft-combat/static/js/main.07b920f4.chunk.js.map",
+    "main.js": "/nft-combat/static/js/main.293a4ff4.chunk.js",
+    "main.js.map": "/nft-combat/static/js/main.293a4ff4.chunk.js.map",
     "runtime-main.js": "/nft-combat/static/js/runtime-main.d5b0570d.js",
     "runtime-main.js.map": "/nft-combat/static/js/runtime-main.d5b0570d.js.map",
     "static/js/2.b55cd453.chunk.js": "/nft-combat/static/js/2.b55cd453.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.d5b0570d.js",
     "static/js/2.b55cd453.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.07b920f4.chunk.js"
+    "static/js/main.293a4ff4.chunk.js"
   ]
 }

@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { ethers, Contract } from "ethers";
 import { CONTRACT_ADDRESS } from "src/constants";
+import { WalletContext } from "src/contexts";
 import { Character, UseContract } from "src/types";
-import contract from "src/utils/contract.json";
-import { useWallet } from ".";
+import contractData from "src/utils/contract.json";
 
 export const useContract: UseContract = () => {
   const [hasNFT, setHasNFT] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [connectedContract, setConnectedContract] = useState<Contract>();
 
-  const { currentAccount } = useWallet();
+  const { currentAccount } = useContext(WalletContext);
 
   const setUpContract = useCallback(() => {
     try {
@@ -19,13 +19,13 @@ export const useContract: UseContract = () => {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const connectedContract = new ethers.Contract(
+        const contract = new ethers.Contract(
           CONTRACT_ADDRESS,
-          contract.abi,
+          contractData.abi,
           signer
         );
 
-        setConnectedContract(connectedContract);
+        setConnectedContract(contract);
       } else {
         console.log("Ethereum object doesn't exist!");
       }
@@ -36,6 +36,7 @@ export const useContract: UseContract = () => {
 
   const checkIfUserHasNFT = useCallback(async () => {
     if (connectedContract) {
+        console.log({connectedContract})
       setIsLoading(true);
 
       const userNFT: Character = await connectedContract.checkIfUserHasNFT();
@@ -53,5 +54,5 @@ export const useContract: UseContract = () => {
     checkIfUserHasNFT();
   }, [checkIfUserHasNFT]);
 
-  return { checkIfUserHasNFT, hasNFT, isLoading };
+  return { hasNFT, isLoading };
 };

@@ -1,7 +1,15 @@
-import { useEffect, useState, useCallback } from "react";
-import { UseWallet } from "src/types";
+import {
+  FunctionComponent,
+  useEffect,
+  useState,
+  useCallback,
+  createContext,
+} from "react";
+import { WalletContextReturn } from "src/types";
 
-export const useWallet: UseWallet = () => {
+export const WalletContext = createContext<WalletContextReturn>({} as WalletContextReturn);
+
+export const WalletContextProvider: FunctionComponent = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState<string>("");
 
   const connectWallet = async () => {
@@ -54,8 +62,14 @@ export const useWallet: UseWallet = () => {
     checkIfWalletIsConnected();
   }, [checkIfWalletIsConnected]);
 
-  return {
-    currentAccount,
-    connectWallet,
-  };
+  return (
+    <WalletContext.Provider value={{ currentAccount, connectWallet }}>
+      {children}
+    </WalletContext.Provider>
+  );
+
+  //   return {
+  //     currentAccount,
+  //     connectWallet,
+  //   };
 };

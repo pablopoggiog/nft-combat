@@ -14,16 +14,13 @@ export interface Character {
 }
 
 interface UseContractReturn {
-  checkIfUserHasNFT: () => void;
   hasNFT: boolean;
   isLoading: boolean;
 }
 
-interface UseWalletReturn {
+export type UseContract = () => UseContractReturn;
+
+export interface WalletContextReturn {
   currentAccount: string;
   connectWallet: () => void;
 }
-
-export type UseContract = () => UseContractReturn;
-
-export type UseWallet = () => UseWalletReturn;

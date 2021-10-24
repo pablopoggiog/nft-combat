@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
-import { useWallet } from "src/hooks";
+import { WalletContext } from "src/contexts";
 import { lightTheme, darkTheme } from "src/theme";
 import { Button, Toggler } from "src/components";
 import image from "src/assets/squid.jpeg";
@@ -11,7 +11,7 @@ const App = () => {
   const themeToggler = () =>
     theme === "light" ? setTheme("dark") : setTheme("light");
 
-  const { currentAccount, connectWallet } = useWallet();
+  const { currentAccount, connectWallet } = useContext(WalletContext);
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>

@@ -67,9 +67,4 @@ export const WalletContextProvider: FunctionComponent = ({ children }) => {
       {children}
     </WalletContext.Provider>
   );
-
-  //   return {
-  //     currentAccount,
-  //     connectWallet,
-  //   };
 };

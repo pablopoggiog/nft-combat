@@ -1,34 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
-import { ethers } from "ethers";
-import contract from "src/utils/contract.json";
-import { CONTRACT_ADDRESS } from "src/constants";
+import { UseWallet } from "src/types";
 
-export const useWallet = () => {
-  const [currentAccount, setCurrentAccount] = useState("");
-
-  const interactWithContract = (
-    callback: (contract: ethers.Contract) => void
-  ) => {
-    try {
-      const { ethereum } = window;
-
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const connectedContract = new ethers.Contract(
-          CONTRACT_ADDRESS,
-          contract.abi,
-          signer
-        );
-
-        callback(connectedContract);
-      } else {
-        console.log("Ethereum object doesn't exist!");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export const useWallet: UseWallet = () => {
+  const [currentAccount, setCurrentAccount] = useState<string>("");
 
   const connectWallet = async () => {
     try {
@@ -83,6 +57,5 @@ export const useWallet = () => {
   return {
     currentAccount,
     connectWallet,
-    interactWithContract,
   };
 };

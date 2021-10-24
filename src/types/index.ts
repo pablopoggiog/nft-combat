@@ -19,4 +19,11 @@ interface UseContractReturn {
   isLoading: boolean;
 }
 
+interface UseWalletReturn {
+  currentAccount: string;
+  connectWallet: () => void;
+}
+
 export type UseContract = () => UseContractReturn;
+
+export type UseWallet = () => UseWalletReturn;

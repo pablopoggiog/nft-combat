@@ -17,6 +17,7 @@ interface UseContractReturn {
   hasNFT: boolean;
   isLoading: boolean;
   characters: Character[];
+  mintNft: (characterIndex: number) => void;
 }
 
 export type UseContract = () => UseContractReturn;

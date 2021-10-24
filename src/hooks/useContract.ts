@@ -37,8 +37,6 @@ export const useContract: UseContract = () => {
 
   const checkIfUserHasNFT = useCallback(async () => {
     if (connectedContract) {
-      setIsLoading(true);
-
       const userNFT: Character = await connectedContract.checkIfUserHasNFT();
       setHasNFT(!!userNFT.name);
 
@@ -54,6 +52,20 @@ export const useContract: UseContract = () => {
     }
   }, [connectedContract]);
 
+  const mintNft = useCallback(
+    async (characterIndex: number) => {
+      if (connectedContract) {
+        setIsLoading(true);
+        const transaction = await connectedContract.mintNFT(characterIndex);
+
+        await transaction.wait();
+
+        setIsLoading(false);
+      }
+    },
+    [connectedContract]
+  );
+
   useEffect(() => {
     currentAccount && setUpContract();
   }, [currentAccount, setUpContract]);
@@ -66,9 +78,5 @@ export const useContract: UseContract = () => {
     getAllCharacters();
   }, [getAllCharacters]);
 
-  useEffect(() => {
-    console.log({characters});
-  }, [characters]);
-
-  return { hasNFT, isLoading, characters };
+  return { hasNFT, isLoading, characters, mintNft };
 };

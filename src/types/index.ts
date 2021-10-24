@@ -11,6 +11,7 @@ export interface Character {
   maxHp: string;
   imageURI: string;
   attackDamage: string;
+  tokenId?: number;
 }
 
 interface UseContractReturn {
@@ -18,7 +19,7 @@ interface UseContractReturn {
   isMintingIndex: number | null;
   characters: Character[];
   mintNft: (characterIndex: number) => void;
-  userNft?: Character ;
+  userNft?: Character;
   isModalOpen: boolean;
 }
 

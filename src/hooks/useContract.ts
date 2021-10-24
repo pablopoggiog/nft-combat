@@ -76,7 +76,7 @@ export const useContract: UseContract = () => {
         const characterNFT = await connectedContract.checkIfUserHasNFT();
         console.log("CharacterNFT: ", characterNFT);
         setHasNft(true);
-        setNft(characterNFT);
+        setNft({ ...characterNFT, tokenId: tokenId.toNumber() });
         setIsModalOpen(true);
       }
     },

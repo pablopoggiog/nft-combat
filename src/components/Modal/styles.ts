@@ -24,7 +24,7 @@ export const Container = styled.div`
   flex-direction: column;
   background-color: #363537;
   color: white;
-  border-radius: 5px;
+  border-radius: 8px;
   width: 80%;
   max-width: 500px;
   padding: 1em 1.4em;

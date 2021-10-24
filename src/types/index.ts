@@ -21,6 +21,7 @@ interface UseContractReturn {
   mintNft: (characterIndex: number) => void;
   userNft?: Character;
   isModalOpen: boolean;
+  getBoss: () => void;
 }
 
 export type UseContract = () => UseContractReturn;

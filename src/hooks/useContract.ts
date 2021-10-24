@@ -7,7 +7,7 @@ import contractData from "src/utils/contract.json";
 
 export const useContract: UseContract = () => {
   const [hasNft, setHasNft] = useState<boolean>(false);
-  const [userNft, setNft] = useState<Character>();
+  const [userNft, setUserNft] = useState<Character>();
   const [characters, setCharacters] = useState<Character[]>([]);
   const [isMintingIndex, setIsMintingIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -69,19 +69,27 @@ export const useContract: UseContract = () => {
   const onMint = useCallback(
     async (sender, tokenId, characterIndex) => {
       console.log(
-        `CharacterNFTMinted - sender: ${sender} tokenId: ${tokenId.toNumber()} characterIndex: ${characterIndex.toNumber()}`
+        `NFT Minted - sender: ${sender} tokenId: ${tokenId.toNumber()} characterIndex: ${characterIndex.toNumber()}`
       );
 
       if (connectedContract) {
         const characterNFT = await connectedContract.checkIfUserHasNFT();
-        console.log("CharacterNFT: ", characterNFT);
+        console.log({ characterNFT });
         setHasNft(true);
-        setNft({ ...characterNFT, tokenId: tokenId.toNumber() });
+        setUserNft({ ...characterNFT, tokenId: tokenId.toNumber() });
         setIsModalOpen(true);
       }
     },
     [connectedContract]
   );
+
+  const getBoss = async () => {
+    if (connectedContract) {
+      const boss = await connectedContract.getBoss();
+      console.log({ boss });
+      return boss;
+    }
+  };
 
   useEffect(() => {
     currentAccount && setUpContract();
@@ -105,5 +113,5 @@ export const useContract: UseContract = () => {
     };
   }, [connectedContract, onMint]);
 
-  return { hasNft, isMintingIndex, characters, mintNft, userNft, isModalOpen };
+  return { hasNft, isMintingIndex, characters, mintNft, userNft, isModalOpen, getBoss };
 };

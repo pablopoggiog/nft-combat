@@ -8,7 +8,7 @@ export const Title = styled.h1`
   text-align: center;
   font-size: 1em;
   padding: 1em;
-  text-shadow: 1px 1px 10px ${({ theme }) => theme.text};
+  text-shadow: 1px 1px 5px lightgrey;
 `;
 
 export const CharactersContainer = styled.div`

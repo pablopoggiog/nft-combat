@@ -18,4 +18,6 @@ export const Container = styled.div`
   justify-content: flex-end;
   margin: 1em 0;
   width: 7em;
+  position: absolute;
+  top: 0;
 `;

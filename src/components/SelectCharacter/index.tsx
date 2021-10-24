@@ -16,7 +16,7 @@ export const SelectCharacter = () => {
 
   return (
     <Container>
-      <Title>Choose your hero and mint it!</Title>
+      <Title>Choose your hero and mint it</Title>
       <CharactersContainer>
         {!!characters.length &&
           characters.map(({ name, hp, maxHp, imageURI, attackDamage }) => (

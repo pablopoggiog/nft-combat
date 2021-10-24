@@ -58,4 +58,6 @@ const ImageContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
+  /* Avoid extra space below the image because of the default display inline */
+  display: flex;
 `;

@@ -13,7 +13,7 @@ export const Button = styled.button<ButtonProps>`
   justify-content: center;
   border: 1px solid ${({ theme }) => theme.toggleBorder};
   background: ${({ theme }) => theme.background};
-  color: ${({ theme }) => theme.text};
+  color: white;
   margin: 1em 0;
 
   &:hover {

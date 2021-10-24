@@ -21,13 +21,18 @@ export const CharactersContainer = styled.div`
   }
 `;
 
-export const Character = styled.div<{ backgroundImage: string }>`
+interface CharacterProps {
+  backgroundImage: string;
+  isModal?: boolean;
+}
+
+export const Character = styled.div<CharacterProps>`
   cursor: pointer;
   border: 1px solid ${({ theme }) => theme.toggleBorder};
   padding: 1em;
   box-shadow: 1px 1px 20px ${({ theme }) => theme.text};
   border-radius: 8px;
-  width: 100%;
+  width: ${({ isModal }) => !isModal && "100%"};
   position: relative;
   min-height: 250px;
   display: flex;
@@ -45,7 +50,8 @@ export const Character = styled.div<{ backgroundImage: string }>`
     bottom: 0px;
     left: 0px;
     transition: 0.5s;
-  border-radius: 8px;
+    border-radius: 8px;
+    pointer-events: none;
   }
 
   @media (max-width: 600px) {

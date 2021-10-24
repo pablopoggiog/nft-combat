@@ -1,5 +1,5 @@
 import { useContract } from "src/hooks";
-import { Button, Spinner } from "src/components";
+import { Button, Modal, Spinner } from "src/components";
 import {
   Container,
   Title,
@@ -12,7 +12,8 @@ import {
 } from "./styles";
 
 export const SelectCharacter = () => {
-  const { characters, mintNft, isLoading } = useContract();
+  const { characters, mintNft, isMinting, userNft, isModalOpen } =
+    useContract();
 
   return (
     <Container>
@@ -22,7 +23,7 @@ export const SelectCharacter = () => {
           characters.map(
             ({ index, name, hp, maxHp, imageURI, attackDamage }) => (
               <Character key={name} backgroundImage={String(imageURI)}>
-                {isLoading ? (
+                {isMinting === index ? (
                   <Spinner />
                 ) : (
                   <>
@@ -45,6 +46,30 @@ export const SelectCharacter = () => {
             )
           )}
       </CharactersContainer>
+      <Modal
+        content={
+          <Character
+            key={userNft?.name}
+            backgroundImage={String(userNft?.imageURI)}
+            isModal={true}
+          >
+            <CharacterName>{userNft?.name}</CharacterName>
+            <CharacterHp>
+              Health Points: <strong>{String(userNft?.hp)}</strong>
+            </CharacterHp>
+            <CharacterMaxHp>
+              Max Health Points: <strong>{String(userNft?.maxHp)}</strong>
+            </CharacterMaxHp>
+            <CharacterAttackDamage>
+              Attack Damage: <strong>{String(userNft?.attackDamage)}</strong>
+            </CharacterAttackDamage>
+          </Character>
+        }
+        isOpen={isModalOpen}
+        onClose={() => {
+          return;
+        }}
+      />
     </Container>
   );
 };

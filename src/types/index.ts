@@ -14,10 +14,12 @@ export interface Character {
 }
 
 interface UseContractReturn {
-  hasNFT: boolean;
-  isLoading: boolean;
+  hasNft: boolean;
+  isMinting: number | null;
   characters: Character[];
   mintNft: (characterIndex: number) => void;
+  userNft: Character | null;
+  isModalOpen: boolean;
 }
 
 export type UseContract = () => UseContractReturn;

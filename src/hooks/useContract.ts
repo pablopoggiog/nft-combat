@@ -6,9 +6,11 @@ import { Character, UseContract } from "src/types";
 import contractData from "src/utils/contract.json";
 
 export const useContract: UseContract = () => {
-  const [hasNFT, setHasNFT] = useState<boolean>(false);
+  const [hasNft, setHasNft] = useState<boolean>(false);
+  const [userNft, setNft] = useState<Character | null>(null);
   const [characters, setCharacters] = useState<Character[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMinting, setIsMinting] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [connectedContract, setConnectedContract] = useState<Contract>();
 
   const { currentAccount } = useContext(WalletContext);
@@ -35,12 +37,10 @@ export const useContract: UseContract = () => {
     }
   }, []);
 
-  const checkIfUserHasNFT = useCallback(async () => {
+  const checkIfUserhasNft = useCallback(async () => {
     if (connectedContract) {
       const userNFT: Character = await connectedContract.checkIfUserHasNFT();
-      setHasNFT(!!userNFT.name);
-
-      setIsLoading(false);
+      setHasNft(!!userNFT.name);
     }
   }, [connectedContract]);
 
@@ -55,12 +55,29 @@ export const useContract: UseContract = () => {
   const mintNft = useCallback(
     async (characterIndex: number) => {
       if (connectedContract) {
-        setIsLoading(true);
+        setIsMinting(characterIndex);
         const transaction = await connectedContract.mintNFT(characterIndex);
 
         await transaction.wait();
 
-        setIsLoading(false);
+        setIsMinting(null);
+      }
+    },
+    [connectedContract]
+  );
+
+  const onMint = useCallback(
+    async (sender, tokenId, characterIndex) => {
+      console.log(
+        `CharacterNFTMinted - sender: ${sender} tokenId: ${tokenId.toNumber()} characterIndex: ${characterIndex.toNumber()}`
+      );
+
+      if (connectedContract) {
+        const characterNFT = await connectedContract.checkIfUserHasNFT();
+        console.log("CharacterNFT: ", characterNFT);
+        setHasNft(true);
+        setNft(characterNFT);
+        setIsModalOpen(true);
       }
     },
     [connectedContract]
@@ -71,12 +88,22 @@ export const useContract: UseContract = () => {
   }, [currentAccount, setUpContract]);
 
   useEffect(() => {
-    checkIfUserHasNFT();
-  }, [checkIfUserHasNFT]);
+    checkIfUserhasNft();
+  }, [checkIfUserhasNft]);
 
   useEffect(() => {
     getAllCharacters();
   }, [getAllCharacters]);
 
-  return { hasNFT, isLoading, characters, mintNft };
+  useEffect(() => {
+    connectedContract?.on("NFTMinted", onMint);
+
+    return () => {
+      if (connectedContract) {
+        connectedContract.off("NFTMinted", onMint);
+      }
+    };
+  }, [connectedContract, onMint]);
+
+  return { hasNft, isMinting, characters, mintNft, userNft, isModalOpen };
 };

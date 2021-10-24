@@ -11,7 +11,7 @@ const App = () => {
   const [theme, setTheme] = useState("dark");
 
   const { currentAccount, connectWallet } = useContext(WalletContext);
-  const { hasNFT } = useContract();
+  const { hasNft } = useContract();
 
   const themeToggler = () =>
     theme === "light" ? setTheme("dark") : setTheme("light");
@@ -32,7 +32,7 @@ const App = () => {
             // if there's an account and it has an NFT minted it shows the arena to battle, if it doesn't have one it shows the character selection
             !currentAccount ? (
               <Button onClick={connectWallet}>Connect your wallet!</Button>
-            ) : !hasNFT ? (
+            ) : hasNft ? (
               <Arena />
             ) : (
               <SelectCharacter />

@@ -1,17 +1,20 @@
 import { useContext, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
 import { WalletContext } from "src/contexts";
+import { useContract } from "src/hooks";
 import { lightTheme, darkTheme } from "src/theme";
 import { Button, Toggler } from "src/components";
 import image from "src/assets/squid.jpeg";
+import { Arena, SelectCharacter } from "./components";
 
 const App = () => {
   const [theme, setTheme] = useState("dark");
 
+  const { currentAccount, connectWallet } = useContext(WalletContext);
+  const { hasNFT } = useContract();
+
   const themeToggler = () =>
     theme === "light" ? setTheme("dark") : setTheme("light");
-
-  const { currentAccount, connectWallet } = useContext(WalletContext);
 
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
@@ -21,9 +24,18 @@ const App = () => {
         <ImageContainer>
           <Image src={image} />
         </ImageContainer>
-        {!currentAccount && (
-          <Button onClick={connectWallet}>Connect your wallet!</Button>
-        )}
+
+        {
+          // if there's no account connected it shows the button to connect one
+          // if there's an account and it has an NFT minted it shows the arena to battle, if it doesn't have one it shows the character selection
+          !currentAccount ? (
+            <Button onClick={connectWallet}>Connect your wallet!</Button>
+          ) : !hasNFT ? (
+            <Arena />
+          ) : (
+            <SelectCharacter />
+          )
+        }
       </Container>
     </ThemeProvider>
   );
@@ -43,9 +55,10 @@ const Container = styled.div`
 const Title = styled.h1`
   text-align: center;
   font-size: 2em;
-  padding: 1em;
+  padding: 1em 0.3em;
   color: ${({ theme }) => theme.text};
   text-shadow: 1px 1px 20px ${({ theme }) => theme.text};
+  margin-top: 0;
 `;
 
 const ImageContainer = styled.div`

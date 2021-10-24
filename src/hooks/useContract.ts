@@ -7,6 +7,7 @@ import contractData from "src/utils/contract.json";
 
 export const useContract: UseContract = () => {
   const [hasNFT, setHasNFT] = useState<boolean>(false);
+  const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [connectedContract, setConnectedContract] = useState<Contract>();
 
@@ -36,13 +37,20 @@ export const useContract: UseContract = () => {
 
   const checkIfUserHasNFT = useCallback(async () => {
     if (connectedContract) {
-        console.log({connectedContract})
       setIsLoading(true);
 
       const userNFT: Character = await connectedContract.checkIfUserHasNFT();
       setHasNFT(!!userNFT.name);
 
       setIsLoading(false);
+    }
+  }, [connectedContract]);
+
+  const getAllCharacters = useCallback(async () => {
+    if (connectedContract) {
+      const allCharacters: Character[] =
+        await connectedContract.getAllCharacters();
+      setCharacters(allCharacters);
     }
   }, [connectedContract]);
 
@@ -54,5 +62,13 @@ export const useContract: UseContract = () => {
     checkIfUserHasNFT();
   }, [checkIfUserHasNFT]);
 
-  return { hasNFT, isLoading };
+  useEffect(() => {
+    getAllCharacters();
+  }, [getAllCharacters]);
+
+  useEffect(() => {
+    console.log({characters});
+  }, [characters]);
+
+  return { hasNFT, isLoading, characters };
 };

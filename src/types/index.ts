@@ -7,15 +7,16 @@ declare global {
 export interface Character {
   index: number;
   name: string;
-  hp: number;
-  maxHp: number;
+  hp: string;
+  maxHp: string;
   imageURI: string;
-  attackDamage: number;
+  attackDamage: string;
 }
 
 interface UseContractReturn {
   hasNFT: boolean;
   isLoading: boolean;
+  characters: Character[];
 }
 
 export type UseContract = () => UseContractReturn;

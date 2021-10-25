@@ -83,13 +83,13 @@ export const useContract: UseContract = () => {
     [connectedContract]
   );
 
-  const getBoss = async () => {
+  const getBoss = useCallback(async () => {
     if (connectedContract) {
       const boss = await connectedContract.getBoss();
       console.log({ boss });
       return boss;
     }
-  };
+  }, [connectedContract]);
 
   useEffect(() => {
     currentAccount && setUpContract();
@@ -113,5 +113,13 @@ export const useContract: UseContract = () => {
     };
   }, [connectedContract, onMint]);
 
-  return { hasNft, isMintingIndex, characters, mintNft, userNft, isModalOpen, getBoss };
+  return {
+    hasNft,
+    isMintingIndex,
+    characters,
+    mintNft,
+    userNft,
+    isModalOpen,
+    getBoss,
+  };
 };

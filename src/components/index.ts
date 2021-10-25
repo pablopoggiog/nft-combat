@@ -5,3 +5,4 @@ export * from "./SelectCharacter";
 export * from "./Spinner";
 export * from "./Modal";
 export * from "./Character";
+export * from "./Boss";

@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 import styled, { ThemeProvider } from "styled-components";
+import Sound from "react-sound";
+import music from "src/assets/combat-music.mp3";
 import { WalletContext } from "src/contexts";
 import { useContract } from "src/hooks";
 import { lightTheme, darkTheme } from "src/theme";
@@ -10,8 +12,17 @@ import { Arena, SelectCharacter } from "./components";
 const App = () => {
   const [theme, setTheme] = useState("dark");
 
+  const [musicStatus, setmusicStatus] = useState<
+    "PLAYING" | "STOPPED" | "PAUSED"
+  >("STOPPED");
+
   const { currentAccount, connectWallet } = useContext(WalletContext);
   const { hasNft } = useContract();
+
+  const musicToggler = () =>
+    musicStatus === "STOPPED"
+      ? setmusicStatus("PLAYING")
+      : setmusicStatus("STOPPED");
 
   const themeToggler = () =>
     theme === "light" ? setTheme("dark") : setTheme("light");
@@ -19,6 +30,10 @@ const App = () => {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <Container>
+        <TogglersContainer>
+          <Toggler toggleTheme={themeToggler} text="Switch Theme" />
+          <Toggler toggleTheme={musicToggler} text="Toggle Music" />
+        </TogglersContainer>
         {hasNft ? (
           <Arena />
         ) : (
@@ -27,7 +42,6 @@ const App = () => {
           </ImageContainer>
         )}
 
-        <Toggler toggleTheme={themeToggler} />
         <BodyContainer>
           {!hasNft && <Title> Let the games begin!</Title>}
 
@@ -44,6 +58,7 @@ const App = () => {
           }
         </BodyContainer>
       </Container>
+      <Sound url={music} playStatus={musicStatus} />
     </ThemeProvider>
   );
 };
@@ -58,6 +73,13 @@ const Container = styled.div`
   box-sizing: border-box;
   transition: 0.6s;
   position: relative;
+`;
+
+const TogglersContainer = styled.div`
+  position: absolute;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 `;
 
 const BodyContainer = styled.div`

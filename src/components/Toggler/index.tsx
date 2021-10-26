@@ -1,23 +1,17 @@
 import { FunctionComponent } from "react";
-import styled from "styled-components";
 import { Button } from "src/components";
+import { Container } from "./styles";
 
 interface TogglerProps {
   toggleTheme: () => void;
+  text: string;
 }
 
-export const Toggler: FunctionComponent<TogglerProps> = ({ toggleTheme }) => (
+export const Toggler: FunctionComponent<TogglerProps> = ({
+  toggleTheme,
+  text,
+}) => (
   <Container>
-    <Button onClick={toggleTheme}>Switch Theme</Button>
+    <Button onClick={toggleTheme}>{text}</Button>
   </Container>
 );
-
-export const Container = styled.div`
-  display: flex;
-  text-align: center;
-  justify-content: flex-end;
-  margin: 1em 0;
-  width: 7em;
-  position: absolute;
-  top: 0;
-`;

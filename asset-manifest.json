@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/nft-combat/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/nft-combat/static/js/main.5779e6b9.chunk.js",
-    "main.js.map": "/nft-combat/static/js/main.5779e6b9.chunk.js.map",
+    "main.js": "/nft-combat/static/js/main.b45b08ed.chunk.js",
+    "main.js.map": "/nft-combat/static/js/main.b45b08ed.chunk.js.map",
     "runtime-main.js": "/nft-combat/static/js/runtime-main.bf7154ab.js",
     "runtime-main.js.map": "/nft-combat/static/js/runtime-main.bf7154ab.js.map",
-    "static/js/2.76d654cf.chunk.js": "/nft-combat/static/js/2.76d654cf.chunk.js",
-    "static/js/2.76d654cf.chunk.js.map": "/nft-combat/static/js/2.76d654cf.chunk.js.map",
+    "static/js/2.137ee44b.chunk.js": "/nft-combat/static/js/2.137ee44b.chunk.js",
+    "static/js/2.137ee44b.chunk.js.map": "/nft-combat/static/js/2.137ee44b.chunk.js.map",
     "static/js/3.c3be716a.chunk.js": "/nft-combat/static/js/3.c3be716a.chunk.js",
     "static/js/3.c3be716a.chunk.js.map": "/nft-combat/static/js/3.c3be716a.chunk.js.map",
     "index.html": "/nft-combat/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/nft-combat/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.76d654cf.chunk.js.LICENSE.txt": "/nft-combat/static/js/2.76d654cf.chunk.js.LICENSE.txt",
+    "static/js/2.137ee44b.chunk.js.LICENSE.txt": "/nft-combat/static/js/2.137ee44b.chunk.js.LICENSE.txt",
     "static/media/squid.5ba43e23.jpeg": "/nft-combat/static/media/squid.5ba43e23.jpeg"
   },
   "entrypoints": [
     "static/js/runtime-main.bf7154ab.js",
-    "static/js/2.76d654cf.chunk.js",
+    "static/js/2.137ee44b.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.5779e6b9.chunk.js"
+    "static/js/main.b45b08ed.chunk.js"
   ]
 }

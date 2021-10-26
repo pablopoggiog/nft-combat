@@ -20,8 +20,12 @@ interface UseContractReturn {
   characters: Character[];
   mintNft: (characterIndex: number) => void;
   userNft?: Character;
+  setUserNft: React.Dispatch<React.SetStateAction<Character | undefined>>;
   isModalOpen: boolean;
-  getBoss: () => Promise<Boss>;
+  fetchBoss: () => void;
+  boss: Boss;
+  attackBoss: () => void;
+  attackStatus: AttackStatus;
 }
 
 export type UseContract = () => UseContractReturn;
@@ -38,3 +42,5 @@ export interface Boss {
   imageURI: string;
   attackDamage: string;
 }
+
+export type AttackStatus = "idle" | "attacking" | "finished";

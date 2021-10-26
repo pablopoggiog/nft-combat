@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Boss as BossType } from "src/types";
+import { AttackStatus, Boss as BossType } from "src/types";
 import {
   Container,
   CharacterName,
@@ -10,11 +10,12 @@ import {
 
 interface BossProps {
   boss?: BossType;
+  status: AttackStatus;
 }
 
-export const Boss: FunctionComponent<BossProps> = ({ boss }) => {
+export const Boss: FunctionComponent<BossProps> = ({ boss, status }) => {
   return (
-    <Container backgroundImage={String(boss?.imageURI)}>
+    <Container backgroundImage={String(boss?.imageURI)} status={status}>
       <CharacterName>{boss?.name}</CharacterName>
       <CharacterHp>
         Health Points: <strong>{String(boss?.hp)}</strong>

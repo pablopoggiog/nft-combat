@@ -19,13 +19,17 @@ const App = () => {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <Container>
-        <ImageContainer>
-          <Image src={image} />
-        </ImageContainer>
+        {hasNft ? (
+          <Arena />
+        ) : (
+          <ImageContainer>
+            <Image src={image} />
+          </ImageContainer>
+        )}
 
         <Toggler toggleTheme={themeToggler} />
         <BodyContainer>
-          <Title> Let the games begin!</Title>
+          {!hasNft && <Title> Let the games begin!</Title>}
 
           {
             // if there's no account connected it shows the button to connect one
@@ -33,7 +37,7 @@ const App = () => {
             !currentAccount ? (
               <Button onClick={connectWallet}>Connect your wallet!</Button>
             ) : hasNft ? (
-              <Arena />
+              <></>
             ) : (
               <SelectCharacter />
             )

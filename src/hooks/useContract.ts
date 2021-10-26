@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { ethers, Contract } from "ethers";
 import { CONTRACT_ADDRESS } from "src/constants";
 import { WalletContext } from "src/contexts";
-import { Character, UseContract } from "src/types";
+import { AttackStatus, Character, UseContract, Boss } from "src/types";
 import contractData from "src/utils/contract.json";
 
 export const useContract: UseContract = () => {
@@ -12,6 +12,23 @@ export const useContract: UseContract = () => {
   const [isMintingIndex, setIsMintingIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [connectedContract, setConnectedContract] = useState<Contract>();
+  const [boss, setBoss] = useState<Boss>({
+    name: "",
+    hp: "",
+    maxHp: "",
+    imageURI: "",
+    attackDamage: "",
+  });
+  const [attackStatus, setAttackStatus] = useState<AttackStatus>("idle");
+
+  const onAttackComplete = useCallback(
+    async (bossHp: Boss["hp"], playerHp: Character["hp"]) => {
+      setBoss((boss) => ({ ...boss!, hp: bossHp }));
+      setUserNft((userNft) => ({ ...userNft!, hp: playerHp }));
+      setAttackStatus("finished");
+    },
+    [setUserNft]
+  );
 
   const { currentAccount } = useContext(WalletContext);
 
@@ -41,6 +58,7 @@ export const useContract: UseContract = () => {
     if (connectedContract) {
       const userNFT: Character = await connectedContract.checkIfUserHasNFT();
       setHasNft(!!userNFT.name);
+      setUserNft(userNFT);
     }
   }, [connectedContract]);
 
@@ -91,6 +109,24 @@ export const useContract: UseContract = () => {
     }
   }, [connectedContract]);
 
+  const attackBoss = useCallback(async () => {
+    if (connectedContract) {
+      setAttackStatus("attacking");
+      try {
+        const transaction = await connectedContract.attackBoss();
+        await transaction.wait();
+      } catch (error) {
+        console.log({ error });
+        setAttackStatus("idle");
+      }
+    }
+  }, [connectedContract]);
+
+  const fetchBoss = useCallback(async () => {
+    const fetchedBoss = await getBoss();
+    setBoss(fetchedBoss);
+  }, [getBoss]);
+
   useEffect(() => {
     currentAccount && setUpContract();
   }, [currentAccount, setUpContract]);
@@ -105,13 +141,15 @@ export const useContract: UseContract = () => {
 
   useEffect(() => {
     connectedContract?.on("NFTMinted", onMint);
+    connectedContract?.on("AttackComplete", onAttackComplete);
 
     return () => {
       if (connectedContract) {
         connectedContract.off("NFTMinted", onMint);
+        connectedContract.off("AttackComplete", onAttackComplete);
       }
     };
-  }, [connectedContract, onMint]);
+  }, [connectedContract, onMint, onAttackComplete]);
 
   return {
     hasNft,
@@ -119,7 +157,11 @@ export const useContract: UseContract = () => {
     characters,
     mintNft,
     userNft,
+    setUserNft,
     isModalOpen,
-    getBoss,
+    fetchBoss,
+    boss,
+    attackBoss,
+    attackStatus,
   };
 };

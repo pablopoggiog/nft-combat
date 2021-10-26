@@ -1,5 +1,5 @@
 import { useContract } from "src/hooks";
-import { Modal, Character } from "src/components";
+import { Button, Modal, Character } from "src/components";
 import { Container, Title, CharactersContainer } from "./styles";
 
 export const SelectCharacter = () => {
@@ -16,17 +16,16 @@ export const SelectCharacter = () => {
               key={character.name}
               isLoading={isMintingIndex === userNft?.index}
               character={character}
-              mint={mintNft}
+              actionButton={
+                <Button onClick={() => mintNft(character!.index)}>
+                  Mint a {character?.name}
+                </Button>
+              }
             />
           ))}
       </CharactersContainer>
       <Modal
-        content={
-          <Character
-            character={userNft}
-            isModal
-          />
-        }
+        content={<Character character={userNft} isModal />}
         isOpen={isModalOpen}
         onClose={() => {
           return;

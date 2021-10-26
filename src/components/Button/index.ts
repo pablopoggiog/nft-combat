@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 interface ButtonProps {
   borderRadius?: string;
+  disabled?: boolean;
 }
 
 export const Button = styled.button<ButtonProps>`
   border-radius: ${({ borderRadius }) => borderRadius ?? "5px"};
   padding: 10px;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   transition: 0.6s;
   text-align: center;
   justify-content: center;

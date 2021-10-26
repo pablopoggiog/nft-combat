@@ -1,14 +1,25 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { AttackStatus } from "src/types";
+
+const blink = keyframes`
+        0% {
+          opacity: 0;
+        }
+  
+        100% {
+          opacity: 1;
+        }
+      `;
 
 interface ContainerProps {
   backgroundImage: string;
   isModal?: boolean;
+  status: AttackStatus;
 }
 
 export const Container = styled.div<ContainerProps>`
   cursor: ${({ isModal }) => !isModal && "pointer"};
   border: 1px solid ${({ theme }) => theme.toggleBorder};
-  padding: 1em;
   box-shadow: 1px 1px 20px ${({ theme }) => theme.text};
   border-radius: 8px;
   width: ${({ isModal }) => !isModal && "100%"};
@@ -18,6 +29,13 @@ export const Container = styled.div<ContainerProps>`
   flex-direction: column;
   justify-content: center;
   transition: 0.5s;
+  color: ${({ theme }) => theme.text};
+  width: 100%;
+  animation: ${({ status }) =>
+    status === "finished" &&
+    css`
+      ${blink} 0.1s linear alternate 10
+    `};
 
   &::before {
     content: "";

@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
-import { Button, Spinner } from "src/components";
+import { Spinner } from "src/components";
 import { CONTRACT_ADDRESS, OPENSEA_LINK } from "src/constants";
-import { Character as CharacterType } from "src/types";
+import { AttackStatus, Character as CharacterType } from "src/types";
 import {
   Container,
   CharacterName,
@@ -15,20 +15,23 @@ interface CharacterProps {
   character?: CharacterType;
   isModal?: boolean;
   isLoading?: boolean;
-  mint?: (characterIndex: number) => void;
+  actionButton?: JSX.Element;
+  status?: AttackStatus;
 }
 
 export const Character: FunctionComponent<CharacterProps> = ({
   character,
   isModal,
   isLoading,
-  mint,
+  actionButton,
+  status,
 }) => {
   return (
     <Container
       key={character?.name}
       backgroundImage={String(character?.imageURI)}
       isModal={isModal}
+      status={status ?? "idle"}
     >
       {isLoading ? (
         <Spinner />
@@ -52,11 +55,7 @@ export const Character: FunctionComponent<CharacterProps> = ({
           <CharacterAttackDamage>
             Attack Damage: <strong>{String(character?.attackDamage)}</strong>
           </CharacterAttackDamage>
-          {mint && (
-            <Button onClick={() => mint(character!.index)}>
-              Mint a {character?.name}
-            </Button>
-          )}
+          {actionButton}
         </>
       )}
     </Container>

@@ -1,7 +1,18 @@
-import styled from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { AttackStatus } from "src/types";
 
+const blink = keyframes`
+        0% {
+          opacity: 0;
+        }
+  
+        100% {
+          opacity: 1;
+        }
+      `;
 interface ContainerProps {
   backgroundImage: string;
+  status: AttackStatus;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -10,12 +21,19 @@ export const Container = styled.div<ContainerProps>`
   box-shadow: 1px 1px 20px ${({ theme }) => theme.text};
   border-radius: 8px;
   position: relative;
+  width: 100%;
   min-height: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: 0.5s;
   color: ${({ theme }) => theme.text};
+  box-sizing: border-box;
+  animation: ${({ status }) =>
+    status === "attacking" &&
+    css`
+      ${blink} 0.1s linear alternate infinite
+    `};
 
   &::before {
     content: "";
@@ -34,7 +52,6 @@ export const Container = styled.div<ContainerProps>`
 
   @media (max-width: 600px) {
     flex-direction: column;
-    width: auto;
   }
 
   &:hover {
